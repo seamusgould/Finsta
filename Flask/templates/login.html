@@ -1,0 +1,27 @@
+<html>
+<!-- Make a beautiful login page -->
+
+<head>
+    <title>Login</title>
+    Welcome to <b> Finstagram </b> Homies! <br>
+    Please login to continue. <br>
+    If you don't have an account, please register.
+</head>
+<body>
+
+<form action="/loginAuth" method="POST">
+	<input type="text" name = "username" placeholder="username" required/> </br>
+	<input type="password" name = "password" placeholder="password" required/></br>
+	<input type="submit" value = Login />
+	{% if error %}
+		<p class="error"><strong>Error:</strong> {{error}}</p>
+	{% endif %}
+</form>
+
+<br>
+
+<a href="/">Go back</a>
+
+</body>
+
+</html>

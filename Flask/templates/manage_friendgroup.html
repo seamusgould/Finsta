@@ -1,0 +1,70 @@
+{% extends 'navbar.html' %}
+{% block content %}
+
+<form action="/create_friendgroup" method="POST">
+	<h1>Welcome {{username}}</h1> 
+	<input type="text" name = "groupName" placeholder="Group Name" required/> </br>
+    <input type="text" name = "groupDescription" placeholder="Group Description"/> </br>
+	<input type="submit" value = "Create FriendGroup" />
+</form>
+
+<style type="text/css">
+	table, th, td{
+		border: 1px solid black;
+	}
+</style>
+
+Here are the groups you own:
+
+<table>
+	<th>Group Name</th>
+    <th>View</th>
+    <th>Manage</th>
+    <th>Delete</th>
+
+{% for line in myGroups %}
+	<tr>
+		<td>{{line.groupName}}</td>
+        <td> <form action="/view_friendgroup" method="POST">
+            <input type="hidden" value="{{line.groupCreator}}" name = "groupCreator">
+            <input type="hidden" value="{{line.groupName}}" name = "groupName"   /> </br>
+            <input type="submit" value = "View Group" />
+        </form> </td>
+        <td> <form action="/manage_members" method="POST">
+            <input type="hidden" value="{{line.groupName}}" name = "groupName"   /> </br>
+            <input type="submit" value = "Manage Members" />
+        </form> </td>
+        <td> <form action="/delete_friendgroup" method="POST">
+            <input type="hidden" value="{{line.groupName}}" name = "groupName"   /> </br>
+            <input type="submit" value = "Delete Friend Group" />
+        </form> </td>
+	</tr>
+{% endfor %}
+</table>
+<br>
+Here are groups you are a member of:
+
+<table>
+    <th>Group Name</th>
+	<th>Owner</th>
+    <th>View</th>
+    <th>Leave</th>
+
+{% for line in notMyGroups %}
+	<tr>
+        <td>{{line.groupName}}</td>
+		<td>{{line.groupCreator}}</td>
+        <td> <form action="/view_friendgroup" method="POST">
+            <input type="hidden" value="{{line.groupCreator}}" name = "groupCreator">
+            <input type="hidden" value="{{line.groupName}}" name = "groupName"   /> </br>
+            <input type="submit" value = "View Group" />
+        </form> </td>
+        <td> <form action="/leave_friendgroup" method="POST">
+            <input type="hidden" value="{{line.groupCreator}}" name = "groupCreator">
+            <input type="hidden" value="{{line.groupName}}" name = "groupName"   /> </br>
+            <input type="submit" value = "Leave Group" />
+        </form> </td>
+	</tr>
+{% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'navbar.html' %}
+{% block content %}
+ <form action="/look_for_friends" method="POST">
+    <div class="input-group">
+        <input type="search" name="query" class="form-control rounded" placeholder="Search for your friends" aria-label="Search" aria-describedby="search-addon" />
+        <button type="button" name="search" class="btn btn-outline-primary">search</button>
+    </div>
+</form>
+    {% for users in usernames %}
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ users.username }}</h5>
+{#                <p class="card-text">first name: {{ users.first_name }}</p>#}
+{#                <p class="card-text">last name: {{ users.last_name }}</p>#}
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

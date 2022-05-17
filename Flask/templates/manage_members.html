@@ -1,0 +1,36 @@
+<html>
+<head>
+</head>
+<body>
+    <h1>Group: {{groupName}}</h1> 
+    <h4>Description: {{groupDescription[0].description}}</h4>
+<form action="/add_member" method="POST">
+	<input type="hidden" name = "groupName" value="{{groupName}}"/> 
+    <input type = "text" name = "addUsername" placeholder="username" required/>
+</br>
+	<input type="submit" value = "Add User to Group" />
+</form>
+
+<style type="text/css">
+	table, th, td{
+		border: 1px solid black;
+	}
+</style>
+
+Here are the members of {{groupName}}:
+
+<table>
+	<th>User</th>
+    <th>Manage</th>
+
+{% for member in members %}
+	<tr>
+		<td>{{member.username}}</td>
+        <td> <form action="/remove_member" method="POST">
+            <input type="hidden" name = "groupName" value="{{groupName}}"/> 
+            <input type="hidden" value="{{member.username}}" name = "removeUsername"/><br>
+            <input type="submit" value = "Remove" />
+        </form> </td>
+	</tr>
+{% endfor %}
+</table>

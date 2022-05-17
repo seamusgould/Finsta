@@ -1,0 +1,132 @@
+{% extends 'navbar.html' %}
+{% block content %}
+
+<body>
+<form action="/follow" method="POST">
+	<h1>Welcome {{username}}</h1> 
+	<input type="text" name = "followee" placeholder="username" required/> </br>
+	<input type="submit" value = "Send Follow Request" />
+</form>
+
+<style type="text/css">
+	table, th, td{
+		border: 1px solid black;
+	}
+</style>
+
+Here are your follow request:
+
+<table>
+	<th>User</th>
+    <th>Accept</th>
+    <th>Deny</th>
+
+{% for line in followers %}
+	<tr>
+		<td>{{line.follower}}</td>
+        <td> <form action="/accept" method="POST">
+            <input type="hidden" value="{{line.follower}}" name = "follower"   /> </br>
+            <input type="submit" value = "Accept" />
+        </form> </td>
+        <td> <form action="/deny" method="POST">
+            <input type="hidden" value="{{line.follower}}" name = "follower"   /> </br>
+            <input type="submit" value = "Deny" />
+        </form> </td>
+	</tr>
+{% endfor %}
+</table>
+<br>
+Here are your sent follow request:
+
+<table>
+	<th>User</th>
+    <th>Remove</th>
+
+{% for line in followees %}
+	<tr>
+		<td>{{line.followee}}</td>
+        <td> <form action="/cancel_follow_request" method="POST">
+            <input type="hidden" value="{{line.followee}}" name = "follower"   /> </br>
+            <input type="submit" value = "Cancel Follow Request" />
+        </form> </td>
+	</tr>
+{% endfor %}
+</table>
+
+<br>
+People you follow:
+
+<table>
+	<th>User</th>
+    <th>Unfollow</th>
+
+{% for person in following %}
+	<tr>
+		<td>{{person.followee}}</td>
+        <td> 
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Unfollow
+            </button>
+            
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Unfollow </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    You are about to unfollow {{person.followee}}. Would you like to be untagged from any photo they have posted?
+                    </div>
+                    <div class="modal-footer">
+                        <form action="/unfollow_remove_tags" method="POST">
+                            <input type="hidden" value="{{person.followee}}" name = "unfollowUser"   /> </br>
+                            <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Unfollow & remove tags</button>
+                        </form> 
+                        <form action="/unfollow_keep_tags" method="POST">
+                            <input type="hidden" value="{{person.followee}}" name = "unfollowUser"   /> </br>
+                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Unfollow & keep tags</button>
+                        </form> 
+                    </div>
+                </div>
+                </div>
+            </div>
+        </td>
+	</tr>
+{% endfor %}
+</table>
+
+
+  
+
+<br>
+
+Here are your tag requests:
+
+<table>
+	<th>User</th>
+    <th>Accept</th>
+    <th>Deny</th>
+
+{% for line in tagUsername %}
+	<tr>
+		<td>{{line.username}}</td>
+        <td> <form action="/tag_accept" method="POST">
+            <input type="text" value="{{line.pID}}" name = "tag_pID" readonly  /> </br>
+            <input type="hidden" value="{{line.username}}" name = "tagged"   /> </br>
+            <input type="submit" value = "Accept" />
+        </form> </td>
+        <td> <form action="/tag_deny" method="POST">
+            <input type="text" value="{{line.pID}}" name = "tag_pID" readonly   /> </br>
+            <input type="hidden" value="{{line.username}}" name = "tagged"   /> </br>
+            <input type="submit" value = "Deny" />
+        </form> </td>
+	</tr>
+{% endfor %}
+</table>
+<br>
+
+</body>
+{% endblock %}
