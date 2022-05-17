@@ -10,10 +10,10 @@ This website allows users to view, post, and react to images.
 - Followers are able to view images posted by the followee.
 - Supports tag requests.  A tagee can accept or deny a tag.
 - Supports comments and reactions.
-- ** Includes a seven line SQL query!**
+- **Includes a seven line SQL query!**
 - Allows users to look for friends using a fuzzy search algorithm.
 - Supports friend groups which allows users to invite and remove people from friend groups.
 
 An implementation can be seen here below:
 
-![Finsta]()
+![Finsta](https://github.com/seamusgould/Finsta/blob/master/Finsta.gif?raw=true))
